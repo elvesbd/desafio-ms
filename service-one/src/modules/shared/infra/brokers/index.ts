@@ -1,1 +1,1 @@
-export * from './kafka-message-broker.service';
+export * from './kafka/producer.service';

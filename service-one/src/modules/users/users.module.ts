@@ -1,17 +1,11 @@
 import { Module } from '@nestjs/common';
-import { KafkaMessageBrokerService } from '../shared/infra/brokers';
 import { CreateUsersController } from './controllers/create';
 import { CreateUsersService } from './services/create';
+import { SharedModule } from '../shared/shared.module';
 
 @Module({
-  imports: [],
+  imports: [SharedModule],
   controllers: [CreateUsersController],
-  providers: [
-    CreateUsersService,
-    {
-      provide: 'MESSAGE_BROKER',
-      useClass: KafkaMessageBrokerService,
-    },
-  ],
+  providers: [CreateUsersService],
 })
 export class UsersModule {}
