@@ -20,14 +20,16 @@ services:
       - ./service-two:/usr/src/service-two
 
   db:
-    image: mysql:latest
+    image: mongo
     restart: always
-    tty: true
+    ports:
+      - 27017:27017
     volumes:
-      - ./.docker/dbdata:/var/lib/mysql
+      - ./mongodb:/data/db
     environment:
-      - MYSQL_DATABASE=fin
-      - MYSQL_ROOT_PASSWORD=root
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=ebd123
+      - MONGO_INITDB_DATABASE=orders
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
