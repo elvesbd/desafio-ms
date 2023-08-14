@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../../dto/create-user.dto';
-import { MessageBroker } from '../../interfaces/message-broker.interface';
+import { MessageBroker } from '../../interfaces';
+import { CreateUserDto } from '../../dto';
 
 @Injectable()
 export class CreateUsersService {
   constructor(private readonly messageBroker: MessageBroker) {}
 
   async execute(createUserDto: CreateUserDto): Promise<void> {
-    await this.messageBroker.publishToTopic('order-topic', createUserDto);
+    await this.messageBroker.publishToTopic('user-topic', createUserDto);
   }
 }
