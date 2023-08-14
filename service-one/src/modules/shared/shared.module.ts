@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ProducerService } from './infra/brokers';
+import { ConsumerService } from './infra/brokers/kafka/consumer.service';
 
 @Module({
-  providers: [ProducerService],
-  exports: [ProducerService],
+  providers: [ConsumerService],
+  exports: [ConsumerService],
 })
 export class SharedModule {}
