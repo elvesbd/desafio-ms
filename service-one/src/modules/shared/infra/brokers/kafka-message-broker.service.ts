@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
+import { CreateUserDto } from 'src/modules/users/dto';
 import { MessageBroker } from 'src/modules/users/interfaces';
 
 @Injectable()
 export class KafkaMessageBrokerService implements MessageBroker {
-  constructor(private readonly t: any) {}
+  constructor(
+    @Inject('USER_SERVICE')
+    private readonly userClient: ClientKafka,
+  ) {}
 
-  publish(topic: string, payload: object): Promise<void> {
-    throw new Error('Method not implemented.');
+  publish(topic: string, payload: CreateUserDto) {
+    this.userClient.emit(topic, payload);
   }
 }
