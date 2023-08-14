@@ -7,6 +7,6 @@ export class CreateUsersService {
   constructor(private readonly messageBroker: MessageBroker) {}
 
   async execute(createUserDto: CreateUserDto): Promise<void> {
-    await this.messageBroker.publishToTopic('user-topic', createUserDto);
+    await this.messageBroker.publish('user-topic', createUserDto);
   }
 }
