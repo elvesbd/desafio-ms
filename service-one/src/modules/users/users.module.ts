@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CreateUserController } from './controllers/create';
-import { CreateUserService } from './services/create';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CreateUserService } from './services/create';
 
 @Module({
   imports: [
