@@ -1,19 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto';
-import { ProducerService } from 'src/modules/shared/infra/brokers';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
-export class CreateUsersService {
-  constructor(private readonly producerService: ProducerService) {}
+export class CreateUserService {
+  constructor(
+    @Inject('USER_SERVICE')
+    private readonly userClient: ClientKafka,
+  ) {}
 
-  async execute(createUserDto: CreateUserDto): Promise<void> {
-    await this.producerService.produce({
-      topic: 'create-user',
-      messages: [
-        {
-          value: JSON.stringify(createUserDto),
-        },
-      ],
-    });
+  async execute(createUserDto: CreateUserDto) {
+    this.userClient.emit('create_user', createUserDto);
   }
 }
