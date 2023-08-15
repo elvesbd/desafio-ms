@@ -1,22 +1,12 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { ConsumerService } from 'src/modules/shared/infra/brokers/kafka/consumer.service';
+import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from '../../dto';
 
 @Injectable()
-export class CreateUsersService implements OnModuleInit {
-  constructor(private readonly consumerService: ConsumerService) {}
+export class CreateUsersService {
+  // constructor() {}
 
-  async onModuleInit() {
-    await this.consumerService.consume(
-      { topics: ['create-user'] },
-      {
-        eachMessage: async ({ topic, partition, message }) => {
-          console.log({
-            value: message.value.toString(),
-            topic: topic.toString(),
-            partition: partition.toString(),
-          });
-        },
-      },
-    );
+  async execute(CreateUserDto: CreateUserDto) {
+    console.log(CreateUserDto);
+    console.log(typeof CreateUserDto);
   }
 }

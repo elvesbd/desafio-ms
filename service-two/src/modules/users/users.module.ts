@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CreateUsersService } from './services/create';
-import { SharedModule } from '../shared/shared.module';
+import { CreateUserController } from './Controllers/create';
 
 @Module({
-  imports: [SharedModule],
+  imports: [],
+  controllers: [CreateUserController],
   providers: [CreateUsersService],
 })
 export class UsersModule {}
