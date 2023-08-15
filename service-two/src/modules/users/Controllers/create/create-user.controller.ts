@@ -1,7 +1,7 @@
 import { Controller, ValidationPipe } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { CreateUserDto } from 'src/modules/users/dto';
 import { CreateUserService } from '../../services/create';
+import { CreateUserDto } from 'src/modules/users/dto';
 import { PatternType } from '../../enum';
 
 @Controller()
