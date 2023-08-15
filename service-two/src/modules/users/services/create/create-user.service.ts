@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto';
 
 @Injectable()
-export class CreateUsersService {
+export class CreateUserService {
   // constructor() {}
 
   async execute(CreateUserDto: CreateUserDto) {
