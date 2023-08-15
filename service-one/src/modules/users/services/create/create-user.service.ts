@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../../dto';
 import { ClientKafka } from '@nestjs/microservices';
+import { CreateUserDto } from '../../dto';
 import { PatternType } from '../../enum';
 
 @Injectable()

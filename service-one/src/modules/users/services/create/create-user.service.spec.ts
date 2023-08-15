@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserService } from './create-user.service';
 import { ClientKafka } from '@nestjs/microservices';
+import { CreateUserService } from './create-user.service';
 import { CreateUserDto } from '../../dto';
 import { PatternType } from '../../enum';
 
