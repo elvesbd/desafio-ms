@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto';
 import { ClientKafka } from '@nestjs/microservices';
+import { PatternType } from '../../enum';
 
 @Injectable()
 export class CreateUserService {
@@ -10,6 +11,6 @@ export class CreateUserService {
   ) {}
 
   async execute(createUserDto: CreateUserDto) {
-    this.userClient.emit('create_user', createUserDto);
+    this.userClient.emit(PatternType.CREATE_USER, createUserDto);
   }
 }
