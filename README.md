@@ -2,61 +2,91 @@
   <br>
   <img src="https://i.ibb.co/MD8jH60/apptrade-logo.jpg" alt="" width="200">
   <br>
-  Desafio - Serviços
+    Proposta de resolução para o desafio
   <br>
 </h1>
 
-<h4 align="center">Desafio para Seleção de Desenvolvedor Back-End</h4>
-
+<h4 align="center">Serviço de Gerenciamento de Usuários</h4>
 
 <p align="center">
   <a href="#descrição">Descrição</a> •
-  <a href="#requisitos">Requisitos</a> •
-  <a href="#observações">Observações</a> •
+  <a href="#serviços">Serviços</a> •
+  <a href="#infraestrutura">Infraestrutura</a> •
   <a href="#guia">Guia</a>
 </p>
 
 ## Descrição
 
-Deverão ser desenvolvidos dois serviços que recebem dados JSON, armazenam em um sistema de mensageria para então ser consumido e armazenado em um banco NoSQL.
+Este é um exemplo de aplicação desenvolvida utilizando a arquitetura de microsserviços com os serviços api-gateway e ms-users, implementados em [NestJS](https://nestjs.com/) (Typescript). O objetivo dessa aplicação é demonstrar a comunicação entre os serviços, o uso de um barramento de mensagens Kafka e a integração com diferentes tipos de armazenamento de dados.
 
-## Requisitos
+## Serviços
 
-### Serviço 01
+### api-gateway
 
-1. Deverá ser desenvolvido em NestJS (Typescript).
-2. Rest ou GraphQL.
-3. Deve ter um endpoint para receber um objeto JSON.
-4. Deve publicar esse objeto para um tópico do Kafka.
-5. Este serviço **NÃO PODE USAR NENHUM BANCO DE DADOS**.
+O serviço api-gateway é responsável por receber as requisições externas e encaminhá-las para o serviço adequado. Neste exemplo, ele fornece um endpoint para receber um objeto JSON e publica esse objeto para um tópico no [Kafka](https://kafka.apache.org/).
 
+### ms-users
 
-### Serviço 02
+O serviço ms-users é responsável pelo gerenciamento de usuários. Ele consome e processa objetos a partir do tópico do Kafka e os insere em um banco de dados NoSQL. Na solução proposta foi utilizado [mongoDB](https://www.mongodb.com/pt-br)
 
-1. Deverá ser desenvolvido em NestJS (Typescript).
-2. Este serviço deve usar um banco de dados NoSQL (MongoDB ou Cassandra).
-3. Deve consumir e remover objetos no tópico do Kafka.
-4. Os objetos consumidos devem ser inseridos no banco de dados.
+## Infraestrutura
 
-### Infraestrutura
+A infraestrutura deste projeto foi cuidadosamente desenvolvida e orquestrada utilizando Docker Compose, com base nas especificações definidas no arquivo YAML fornecido. Essa abordagem permite uma implantação simplificada e consistente de todos os componentes necessários para o funcionamento da aplicação de gerenciamento de usuários.
 
-1. O banco e os sistemas devem estar containerizados.
-2. Toda a infraestrutura deve estar online na máquina local com, no máximo, 10 comandos em qualquer máquina Linux com Docker instalado.
-3. O Docker deve ser utilizado como base da infraestrutura.
+A infraestrutura consiste em diversos serviços interconectados que trabalham em conjunto para garantir o fluxo de dados, processamento e armazenamento seguro. Abaixo estão os principais componentes que compõem a infraestrutura:
 
-## Observações
+**_api-gateway:_**&nbsp; Este serviço atua como o ponto de entrada para as solicitações externas. Ele recebe requisições e encaminha para o serviço adequado. Isso é feito através do mapeamento das portas e volumes definidos no arquivo YAML.
 
-* Todos os recursos devem estar nesse único repositório.
-* Não é necessário e não será avaliado nenhum recurso de Front-End.
-* Os padrões de projetos e tecnologias aplicadas serão avaliadas.
-* A modelagem de banco e estratégias de manipulação de dados serão avaliadas.
-* Documentação não é obrigatória, mas a facilidade no uso dos recursos será avaliada e a presença de uma documentação simplificada pode impactar positivamente.
-* A organização do repositório será avaliada.
-* Os commits serão avaliados. Atente-se aos padrões que deseja utilizar.
+**_ms-users:_**&nbsp; Este é um microsserviço responsável pelo gerenciamento de usuários. Ele se comunica com o serviço api-gateway e consome mensagens do tópico do Kafka para processar e inserir dados de usuários em um banco de dados NoSQL (MongoDB).
+
+**_db_**:&nbsp; Um banco de dados NoSQL MongoDB é provisionado para armazenar os dados dos usuários. Ele é configurado com um nome de usuário e senha, permitindo acesso seguro.
+
+**_zookeeper:_**&nbsp; O ZooKeeper é um serviço centralizado para gerenciar a configuração e coordenação do cluster Kafka. Ele é usado para garantir a confiabilidade e consistência na comunicação entre os nós do Kafka.
+
+**_kafka:_**&nbsp; O Kafka é uma plataforma de streaming distribuída, usada aqui como um barramento de mensagens. Ele é configurado com um tópico para transmitir os objetos JSON entre os serviços api-gateway e ms-users. O serviço ms-users consome essas mensagens e as processa para posterior inserção no banco de dados.
 
 ## Guia
 
-1. Faça um fork privado do repositório.
-2. Desenvolva os recursos.
-3. Conceda permissão de leitura para membros indicados.
-4. Aguarde a avaliação.
+1. Faça o clone do repositório.
+
+```
+git clone https://github.com/elvesbd/desafio-ms.git
+```
+
+2. Acesse o projeto api-gateway.
+
+```
+cd desafio-ms/api-gateway
+```
+
+3. Execute o comando.
+
+```
+npm install
+```
+
+4. Acesse o projeto api-gateway.
+
+```
+cd desafio-ms/ms-users
+```
+
+5. Execute o comando.
+
+```
+npm install
+```
+
+6. crie o arquivo .env com as informações contidas no arquivo .env.example
+
+```
+MONGO_URI=mongodb://root:ebd123@db:27017
+```
+
+7. Suba a infraestrutura com o comando.
+
+```
+docker compose up
+```
+
+8. Agora você só precisa realizar uma requisição para o serviço api-gateway com os dados da requisição.
