@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserDto } from '../../dto';
 import { CreateUserService } from './create-user.service';
+import { CreateUserDto } from '../../dto';
 import { UsersRepository } from '../../repository';
 import { UserDataBuilder } from '../../__mocks__';
 
