@@ -2,33 +2,49 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from '../../dto';
 import { CreateUserService } from './create-user.service';
 import { UsersRepository } from '../../repository';
+import { UserDataBuilder } from '../../__mocks__';
 
 describe('CreateUserService', () => {
   let sut: CreateUserService;
   let usersRepository: UsersRepository;
 
+  const user = UserDataBuilder.aUser().build();
+
   beforeEach(async () => {
     jest.clearAllMocks();
 
+    const UsersRepositoryProvider = {
+      provide: 'USERS_REPOSITORY',
+      useValue: {
+        create: jest.fn().mockResolvedValue(user),
+      },
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [CreateUserService],
+      providers: [CreateUserService, UsersRepositoryProvider],
     }).compile();
 
     sut = module.get<CreateUserService>(CreateUserService);
+    usersRepository = module.get<UsersRepository>('USERS_REPOSITORY');
   });
 
   it('should be defined', () => {
     expect(sut).toBeDefined();
+    expect(usersRepository).toBeDefined();
   });
 
   describe('execute()', () => {
-    const createUserDto: CreateUserDto = {
-      name: 'Kelly Slater',
-      email: 'kelly@test.com',
-      phone: '85999567899',
-      age: 29,
+    const createsUserDto: CreateUserDto = {
+      name: 'John Doe',
+      email: 'john@mail.com',
+      phone: '85999481515',
+      age: 40,
     };
 
-    it('should be', async () => {});
+    it('should be called usersRepository.create with correct values', async () => {
+      await sut.execute(createsUserDto);
+      expect(usersRepository.create).toHaveBeenCalledTimes(1);
+      expect(usersRepository.create).toHaveBeenCalledWith(createsUserDto);
+    });
   });
 });
