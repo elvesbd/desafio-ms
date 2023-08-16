@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MongoUsersRepositoryService } from './Infra/database/mongo/repository/mongo-users-repository.service';
 import {
   UserModel,
-  UserSchema,
+  userSchema,
 } from './Infra/database/mongo/schemas/user.schema';
 
 @Module({
@@ -13,13 +12,11 @@ import {
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('MONGO_URI'),
-        dbName: 'users',
+        dbName: 'backoffice',
       }),
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([{ name: UserModel.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: UserModel.name, schema: userSchema }]),
   ],
-  providers: [MongoUsersRepositoryService],
-  exports: [MongoUsersRepositoryService],
 })
 export class SharedModule {}

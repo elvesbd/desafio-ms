@@ -4,11 +4,8 @@ import { User } from 'src/modules/users/entity/user';
 
 export type UserDocument = UserModel & Document;
 
-@Schema()
+@Schema({ collection: 'users' })
 export class UserModel implements User {
-  @Prop()
-  id: string;
-
   @Prop()
   name: string;
 
@@ -19,4 +16,4 @@ export class UserModel implements User {
   age: number;
 }
 
-export const UserSchema = SchemaFactory.createForClass(UserModel);
+export const userSchema = SchemaFactory.createForClass(UserModel);
