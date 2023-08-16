@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MongoUsersRepositoryService } from './Infra/database/mongo/repository/mongo-users-repository.service';
+import {
+  UserModel,
+  UserSchema,
+} from './Infra/database/mongo/schemas/user.schema';
 
 @Module({
   imports: [
@@ -12,7 +17,9 @@ import { MongooseModule } from '@nestjs/mongoose';
       }),
       inject: [ConfigService],
     }),
+    MongooseModule.forFeature([{ name: UserModel.name, schema: UserSchema }]),
   ],
-  providers: [],
+  providers: [MongoUsersRepositoryService],
+  exports: [MongoUsersRepositoryService],
 })
 export class SharedModule {}
