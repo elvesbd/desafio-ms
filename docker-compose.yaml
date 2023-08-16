@@ -1,21 +1,21 @@
 version: "3"
 
 services:
-  service-one:
+  api-gateway:
     build:
-      context: ./service-one
+      context: ./api-gateway
     ports:
       - 3000:3000
     volumes:
-      - ./service-one:/usr/src/service-one
+      - ./api-gateway:/usr/src/api-gateway
 
-  service-two:
+  ms-users:
     build:
-      context: ./service-two
+      context: ./ms-users
     depends_on:
       - db
     volumes:
-      - ./service-two:/usr/src/service-two
+      - ./ms-users:/usr/src/ms-users
 
   db:
     image: mongo

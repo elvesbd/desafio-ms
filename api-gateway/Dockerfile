@@ -1,6 +1,6 @@
 FROM node:18
 
-WORKDIR /usr/src/service-one
+WORKDIR /usr/src/api-gateway
 
 COPY package*.json ./
 

@@ -1,6 +1,6 @@
 FROM node:18
 
-WORKDIR /usr/src/service-two
+WORKDIR /usr/src/ms-users
 
 COPY package*.json ./
 
