@@ -46,5 +46,10 @@ describe('CreateUserService', () => {
       expect(usersRepository.create).toHaveBeenCalledTimes(1);
       expect(usersRepository.create).toHaveBeenCalledWith(createsUserDto);
     });
+
+    it('should be return an user created on success', async () => {
+      const result = await sut.execute(createsUserDto);
+      expect(result).toStrictEqual(user);
+    });
   });
 });
