@@ -27,7 +27,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=ebd123
-      - MONGO_INITDB_DATABASE=users
+      - MONGO_INITDB_DATABASE=backoffice
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
