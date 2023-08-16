@@ -10,6 +10,6 @@ export class CreateUserService {
   ) {}
 
   async execute(createUserDto: CreateUserDto) {
-    return await this.usersRepository.create(createUserDto);
+    await this.usersRepository.create(createUserDto);
   }
 }

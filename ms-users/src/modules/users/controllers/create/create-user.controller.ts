@@ -1,4 +1,4 @@
-import { Controller, ValidationPipe } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { CreateUserService } from '../../services/create';
 import { CreateUserDto } from 'src/modules/users/dto';
@@ -9,7 +9,7 @@ export class CreateUserController {
   constructor(private readonly createUserService: CreateUserService) {}
 
   @EventPattern(PatternType.CREATE_USER)
-  Create(@Payload(ValidationPipe) data: CreateUserDto) {
-    this.createUserService.execute(data);
+  async create(@Payload() data: CreateUserDto) {
+    await this.createUserService.execute(data);
   }
 }
