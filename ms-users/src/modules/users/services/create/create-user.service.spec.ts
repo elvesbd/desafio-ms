@@ -1,9 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from '../../dto';
 import { CreateUserService } from './create-user.service';
+import { UsersRepository } from '../../repository';
 
 describe('CreateUserService', () => {
   let sut: CreateUserService;
+  let usersRepository: UsersRepository;
 
   beforeEach(async () => {
     jest.clearAllMocks();
