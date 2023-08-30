@@ -65,7 +65,7 @@ cd desafio-ms/api-gateway
 npm install
 ```
 
-4. Acesse o projeto api-gateway.
+4. Acesse o projeto ms-users.
 
 ```
 cd desafio-ms/ms-users
@@ -77,7 +77,7 @@ cd desafio-ms/ms-users
 npm install
 ```
 
-6. crie o arquivo .env com as informações contidas no arquivo .env.example
+6. No projeto ms-users crie o arquivo .env com as informações contidas no arquivo .env.example
 
 ```
 MONGO_URI=mongodb://root:ebd123@db:27017
